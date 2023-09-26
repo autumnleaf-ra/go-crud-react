@@ -59,3 +59,8 @@ The API server will start at http://localhost:4000.
 - POST /api/users
 - PATCH /api/users/:id
 - DELETE /api/users/:id
+
+# Deployed App
+```
+https://go-crudreactapi.netlify.app/
+```
