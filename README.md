@@ -61,6 +61,6 @@ The API server will start at http://localhost:4000.
 - DELETE /api/users/:id
 
 # Deployed App
-```
+```bash
 https://go-crudreactapi.netlify.app/
 ```
