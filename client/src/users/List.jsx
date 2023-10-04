@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { API_URL } from "../config";
 import EachUser from "./EachUser";
+import axios from "axios";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 
 export default function List() {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,12 @@ export default function List() {
   const [searchParams, setSearchParams] = useSearchParams();
   let navigate = useNavigate();
 
-  // Get Data
+  const openModal = () => {
+    document.getElementById("new-modal").classList.remove("hidden");
+  };
+  const closeModal = () => {
+    document.getElementById("new-modal").classList.add("hidden");
+  };
   const fetchData = async () => {
     const page = searchParams.get("page")
       ? "&page=" + searchParams.get("page")
@@ -21,23 +26,13 @@ export default function List() {
       setUsers(json.data.items);
       setPages(json.data.total_pages);
     } catch (error) {
-      console.log("Error");
+      console.log("error", error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [searchParams]);
 
-  // Close modal Func
-  const openModal = () => {
-    document.getElementById("new-modal").classList.remove("hidden");
-  };
-  const closeModal = () => {
-    document.getElementById("new-modal").classList.add("hidden");
-  };
-
-  // Check Form
   const completeForm = (form) => {
     closeModal();
     form.reset();
@@ -45,11 +40,10 @@ export default function List() {
     navigate("/");
   };
 
-  // Add Data
   const storeUser = (e) => {
     e.preventDefault();
     var form = document.getElementById("newform");
-    var formData = new formData(form);
+    var formData = new FormData(form);
     axios
       .post(`${API_URL}/users`, formData)
       .then((res) => completeForm(form))
